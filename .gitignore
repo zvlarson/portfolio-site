@@ -26,3 +26,4 @@ dist-ssr
 # Uploaded files (user content)
 public/uploads/*
 !public/uploads/.gitkeep
+.vercel
