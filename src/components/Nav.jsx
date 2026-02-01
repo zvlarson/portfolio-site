@@ -54,6 +54,14 @@ export default function Nav() {
         top: offsetPosition,
         behavior: 'smooth'
       });
+
+      // Add highlight effect after scroll completes
+      setTimeout(() => {
+        element.classList.add('section--highlight');
+        setTimeout(() => {
+          element.classList.remove('section--highlight');
+        }, 2000);
+      }, 500);
     }
   };
 
