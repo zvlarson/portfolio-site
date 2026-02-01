@@ -11,9 +11,6 @@ export default function Footer() {
           <p className="footer__copyright">
             {currentYear} Zachary Larson. All rights reserved.
           </p>
-          <p className="footer__built">
-            Built with React
-          </p>
         </div>
       </Container>
     </footer>
