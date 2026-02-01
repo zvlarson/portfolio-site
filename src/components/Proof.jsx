@@ -18,7 +18,7 @@ export default function Proof() {
   };
 
   return (
-    <section className="proof">
+    <section id="impact" className="proof">
       <Container>
         <h2 className="proof__title">{title}</h2>
         <div className="proof__grid">
