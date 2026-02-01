@@ -2,8 +2,10 @@ export const siteContent = {
   hero: {
     name: 'Zachary Larson',
     credentials: 'MBA, SHRM-SCP',
-    headline: 'Strategy & Operations Leader | Executive Partner to C-Suite',
-    subheadline: 'I combine strategic vision with hands-on implementation to identify inefficiencies, develop innovative solutions, and drive measurable business outcomes across technology optimization, organizational transformation, and operational excellence.',
+    headline: 'Enterprise Transformation Leader | People, Strategy, & Operations',
+    subheadline: 'I partner with executives to design and deliver enterprise-scale transformation—improving workforce performance, operating models, and business systems to drive measurable cost, productivity, and engagement outcomes.',
+    tagline: 'From insight to implementation. From strategy to results.',
+    focusAreas: 'Focus areas: Operational Excellence, Organizational Effectiveness, HR Strategy, HR Tech & AI, People Analytics',
     ctaPrimary: 'View Case Studies',
     ctaSecondary: 'Get In Touch',
   },
