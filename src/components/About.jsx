@@ -16,7 +16,7 @@ export default function About() {
               <p key={index}>{paragraph}</p>
             ))}
           </div>
-          <div className="about__contact">
+          <div id="connect" className="about__contact">
             <h3>Let's Connect</h3>
             <div className="about__links">
               <Button

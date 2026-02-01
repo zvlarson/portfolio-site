@@ -5,7 +5,7 @@ const navItems = [
   { label: 'Impact', href: '#impact' },
   { label: 'Case Studies', href: '#projects' },
   { label: 'About', href: '#about' },
-  { label: 'Connect', href: '#about' },
+  { label: 'Connect', href: '#connect' },
 ];
 
 export default function Nav() {
@@ -18,14 +18,14 @@ export default function Nav() {
       setIsVisible(window.scrollY > 300);
 
       // Determine active section
-      const sections = ['impact', 'projects', 'about'];
+      const sections = ['impact', 'projects', 'about', 'connect'];
       let current = '';
 
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
+          if (rect.top <= 200) {
             current = section;
           }
         }
