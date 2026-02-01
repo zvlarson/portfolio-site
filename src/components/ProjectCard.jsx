@@ -1,13 +1,13 @@
 import './Projects.css';
 
 export default function ProjectCard({ project }) {
-  const { title, company, challenge, solution, impact, description, tags, image } = project;
+  const { id, title, company, challenge, solution, impact, description, tags, image } = project;
 
   // Support both old format (description) and new case study format (challenge/solution/impact)
   const isCaseStudy = challenge && solution && impact;
 
   return (
-    <article className="project-card">
+    <article id={`case-study-${id}`} className="project-card">
       {image && (
         <div className="project-card__image">
           <img src={image} alt={title} />

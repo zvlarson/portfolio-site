@@ -13,10 +13,10 @@ export const siteContent = {
   proof: {
     title: 'Impact at Scale',
     items: [
-      { metric: '8-Figure', description: 'Cost savings identified through organizational transformation initiatives' },
-      { metric: '110%+', description: 'Improvement in employee engagement scores' },
-      { metric: '70%+', description: 'Reduction in hiring cycle time through process redesign' },
-      { metric: '40K+', description: 'Employees engaged through enterprise listening programs' },
+      { metric: '8-Figure', description: 'Cost savings identified through organizational transformation initiatives', caseStudyId: '2' },
+      { metric: '110%+', description: 'Improvement in employee engagement scores', caseStudyId: '1' },
+      { metric: '70%+', description: 'Reduction in hiring cycle time through process redesign', caseStudyId: '3' },
+      { metric: '40K+', description: 'Employees engaged through enterprise listening programs', caseStudyId: '1' },
     ],
   },
 
