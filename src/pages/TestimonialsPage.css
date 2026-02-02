@@ -1,0 +1,144 @@
+.testimonials-page {
+  flex: 1;
+  padding: var(--space-16) 0;
+}
+
+.testimonials-page__header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.testimonials-page__header h1 {
+  margin-bottom: var(--space-4);
+}
+
+.testimonials-page__header p {
+  color: var(--color-text-secondary);
+  font-size: var(--text-lg);
+}
+
+.testimonials-page__loading,
+.testimonials-page__empty {
+  text-align: center;
+  padding: var(--space-12);
+  color: var(--color-text-secondary);
+}
+
+.testimonials-page__cta {
+  display: inline-block;
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-accent);
+  color: white;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+
+.testimonials-page__filters {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-10);
+}
+
+.testimonials-page__filter {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.testimonials-page__filter:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.testimonials-page__filter--active {
+  background: var(--color-accent-muted);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.testimonials-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--space-6);
+}
+
+.testimonials-page__card {
+  padding: var(--space-6);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.testimonials-page__video {
+  margin-bottom: var(--space-5);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--color-bg-secondary);
+}
+
+.testimonials-page__video video,
+.testimonials-page__video iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.testimonials-page__quote {
+  color: var(--color-text-primary);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  font-style: italic;
+  margin-bottom: var(--space-5);
+}
+
+.testimonials-page__author {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.testimonials-page__name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.testimonials-page__title {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.testimonials-page__related {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.testimonials-page__related span {
+  color: var(--color-text-muted);
+}
+
+.testimonials-page__related a {
+  color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .testimonials-page {
+    padding: var(--space-12) 0;
+  }
+
+  .testimonials-page__grid {
+    grid-template-columns: 1fr;
+  }
+}

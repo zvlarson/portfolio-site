@@ -1,1 +1,54 @@
-[]
+[
+  {
+    "id": "1",
+    "slug": "enterprise-employee-listening",
+    "title": "Enterprise Employee Listening Program",
+    "company": "National Transportation Company",
+    "summary": "Designed and launched the organization's first global employee listening program, building scalable infrastructure to capture sentiment across all business units.",
+    "challenge": "No enterprise-wide employee feedback mechanism had existed for several years, leaving leadership without actionable data to drive workforce engagement strategy.",
+    "whatIBuilt": "Designed and launched the organization's first global employee listening program, building scalable infrastructure to capture sentiment across all business units and generate executive-level insights.",
+    "impact": "Engaged 40,000+ employees, generated actionable insights at scale, and drove a 110%+ improvement in employee engagement scores—directly informing enterprise strategy.",
+    "artifacts": [],
+    "tags": ["Executive Partnership", "Employee Engagement", "Data-Driven Strategy", "Change Management"],
+    "featuredTestimonialIds": []
+  },
+  {
+    "id": "2",
+    "slug": "talent-acquisition-transformation",
+    "title": "Talent Acquisition & HR Transformation",
+    "company": "National Transportation Company",
+    "summary": "Led organizational effectiveness analysis and redesigned end-to-end hiring workflows to deliver 8-figure impact through labor efficiencies.",
+    "challenge": "The candidate journey was fragmented with process bottlenecks that impacted compliance, slowed hiring velocity, and created inefficiencies across distributed HR operations.",
+    "whatIBuilt": "Led organizational effectiveness analysis and redesigned end-to-end hiring workflows—eliminating bottlenecks, improving compliance, and strengthening operational accountability across the enterprise.",
+    "impact": "Delivered 8-figure impact through labor efficiencies, significantly reduced recruitment costs, and improved time-to-productivity for new hires at scale.",
+    "artifacts": [],
+    "tags": ["Organizational Design", "Process Transformation", "Operational Excellence", "Talent Strategy"],
+    "featuredTestimonialIds": []
+  },
+  {
+    "id": "3",
+    "slug": "high-volume-recruiting-turnaround",
+    "title": "High-Volume Recruiting Turnaround",
+    "company": "Global Security Services Company",
+    "summary": "Led operational turnaround through workforce planning and productivity redesign for an organization supporting 30,000+ hires annually.",
+    "challenge": "The internal recruiting organization supporting 30,000+ hires annually was underperforming with extended cycle times and inefficient operations impacting business readiness.",
+    "whatIBuilt": "Led operational turnaround through workforce planning and productivity redesign. Co-developed proprietary recruiting technology to maintain hiring velocity during unprecedented market disruption.",
+    "impact": "Reduced hiring cycle time by 70%+, achieved 5x improvement in team productivity metrics, and delivered 7-figure annualized cost savings through operational efficiency.",
+    "artifacts": [],
+    "tags": ["Turnaround Leadership", "Workforce Planning", "Technology Innovation", "High-Volume Recruiting"],
+    "featuredTestimonialIds": []
+  },
+  {
+    "id": "4",
+    "slug": "product-innovation-revenue-growth",
+    "title": "Product Innovation & Revenue Growth",
+    "company": "HR Technology Startup",
+    "summary": "Conducted targeted user research and led product development to systematically re-engage dormant applicants, generating 7-figure incremental revenue.",
+    "challenge": "The platform faced challenges with applicant re-engagement, missing opportunities to unlock value from existing talent pools and drive incremental revenue.",
+    "whatIBuilt": "Conducted targeted user research to identify pain points, led product development to systematically re-engage dormant applicants, and delivered executive presentations to secure stakeholder alignment.",
+    "impact": "Launched new product capability that generated 7-figure incremental revenue by unlocking value from existing customer databases.",
+    "artifacts": [],
+    "tags": ["Product Leadership", "User Research", "Revenue Growth", "Stakeholder Management"],
+    "featuredTestimonialIds": []
+  }
+]

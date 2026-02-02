@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import Seo from '../components/Seo';
 import { siteContent } from '../data/content';
 import './RequestVideo.css';
 
@@ -70,6 +71,7 @@ export default function RequestVideo() {
   if (status === 'success') {
     return (
       <div className="request-video">
+        <Seo title="Thank You" path="/request-video" noindex />
         <Container size="narrow">
           <div className="request-video__success">
             <div className="request-video__success-icon">&#10003;</div>
@@ -86,6 +88,7 @@ export default function RequestVideo() {
 
   return (
     <div className="request-video">
+      <Seo title="Share Your Experience" path="/request-video" noindex />
       <Container size="narrow">
         <div className="request-video__header">
           <Link to="/" className="request-video__back">&larr; Back</Link>

@@ -2,13 +2,30 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import Seo from '../components/Seo';
 import './Admin.css';
+
+const CASE_STUDY_OPTIONS = [
+  { slug: 'enterprise-employee-listening', title: 'Enterprise Employee Listening Program' },
+  { slug: 'talent-acquisition-transformation', title: 'Talent Acquisition & HR Transformation' },
+  { slug: 'high-volume-recruiting-turnaround', title: 'High-Volume Recruiting Turnaround' },
+  { slug: 'product-innovation-revenue-growth', title: 'Product Innovation & Revenue Growth' },
+];
 
 export default function Admin() {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('pending'); // pending, approved, all
+  const [filter, setFilter] = useState('pending');
+  const [adminSecret, setAdminSecret] = useState(() => localStorage.getItem('adminSecret') || '');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({ caseStudySlugs: [] });
+
+  const getAuthHeaders = useCallback(() => ({
+    'Content-Type': 'application/json',
+    'x-admin-secret': adminSecret,
+  }), [adminSecret]);
 
   const fetchTestimonials = useCallback(async () => {
     setLoading(true);
@@ -32,17 +49,43 @@ export default function Admin() {
   }, [filter]);
 
   useEffect(() => {
-    fetchTestimonials();
-  }, [fetchTestimonials]);
+    if (isAuthenticated) {
+      fetchTestimonials();
+    }
+  }, [fetchTestimonials, isAuthenticated]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/testimonials?approved=false', {
+        headers: { 'x-admin-secret': adminSecret },
+      });
+      if (response.ok) {
+        localStorage.setItem('adminSecret', adminSecret);
+        setIsAuthenticated(true);
+      } else {
+        alert('Invalid admin secret');
+      }
+    } catch {
+      setIsAuthenticated(true);
+    }
+  };
 
   const handleApprove = async (id) => {
     try {
       const response = await fetch(`/api/testimonials/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ approved: true }),
       });
-      if (!response.ok) throw new Error('Failed to approve');
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert('Unauthorized. Please check your admin secret.');
+          setIsAuthenticated(false);
+          return;
+        }
+        throw new Error('Failed to approve');
+      }
       fetchTestimonials();
     } catch {
       alert('Failed to approve testimonial');
@@ -55,8 +98,16 @@ export default function Admin() {
     try {
       const response = await fetch(`/api/testimonials/${id}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       });
-      if (!response.ok) throw new Error('Failed to delete');
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert('Unauthorized. Please check your admin secret.');
+          setIsAuthenticated(false);
+          return;
+        }
+        throw new Error('Failed to delete');
+      }
       fetchTestimonials();
     } catch {
       alert('Failed to delete testimonial');
@@ -67,18 +118,90 @@ export default function Admin() {
     try {
       const response = await fetch(`/api/testimonials/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ approved: false }),
       });
-      if (!response.ok) throw new Error('Failed to unapprove');
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert('Unauthorized. Please check your admin secret.');
+          setIsAuthenticated(false);
+          return;
+        }
+        throw new Error('Failed to unapprove');
+      }
       fetchTestimonials();
     } catch {
       alert('Failed to unapprove testimonial');
     }
   };
 
+  const handleEdit = (testimonial) => {
+    setEditingId(testimonial.id);
+    setEditData({
+      caseStudySlugs: testimonial.caseStudySlugs || [],
+    });
+  };
+
+  const handleCaseStudyToggle = (slug) => {
+    setEditData(prev => ({
+      ...prev,
+      caseStudySlugs: prev.caseStudySlugs.includes(slug)
+        ? prev.caseStudySlugs.filter(s => s !== slug)
+        : [...prev.caseStudySlugs, slug],
+    }));
+  };
+
+  const handleSaveEdit = async (id) => {
+    try {
+      const response = await fetch(`/api/testimonials/${id}`, {
+        method: 'PATCH',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ caseStudySlugs: editData.caseStudySlugs }),
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert('Unauthorized. Please check your admin secret.');
+          setIsAuthenticated(false);
+          return;
+        }
+        throw new Error('Failed to save');
+      }
+      setEditingId(null);
+      fetchTestimonials();
+    } catch {
+      alert('Failed to save changes');
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="admin">
+        <Seo title="Admin" path="/admin" noindex />
+        <Container>
+          <div className="admin__login">
+            <h1>Admin Login</h1>
+            <form onSubmit={handleLogin}>
+              <input
+                type="password"
+                placeholder="Enter admin secret"
+                value={adminSecret}
+                onChange={(e) => setAdminSecret(e.target.value)}
+                className="admin__secret-input"
+              />
+              <Button type="submit" variant="primary">
+                Login
+              </Button>
+            </form>
+            <Link to="/" className="admin__back-link">Back to Site</Link>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div className="admin">
+      <Seo title="Admin" path="/admin" noindex />
       <Container>
         <div className="admin__header">
           <div className="admin__title-row">
@@ -150,14 +273,59 @@ export default function Admin() {
                       <span className={`admin__status admin__status--${testimonial.approved ? 'approved' : 'pending'}`}>
                         {testimonial.approved ? 'Approved' : 'Pending'}
                       </span>
+                      <span className="admin__type">
+                        {testimonial.type || (testimonial.videoUrl ? 'video' : 'written')}
+                      </span>
                       <span className="admin__date">
                         {new Date(testimonial.createdAt).toLocaleDateString()}
                       </span>
                     </div>
+
+                    {testimonial.caseStudySlugs?.length > 0 && (
+                      <div className="admin__case-studies">
+                        <span>Linked to:</span>
+                        {testimonial.caseStudySlugs.map(slug => (
+                          <span key={slug} className="admin__case-study-tag">
+                            {CASE_STUDY_OPTIONS.find(o => o.slug === slug)?.title || slug}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {editingId === testimonial.id && (
+                      <div className="admin__edit-panel">
+                        <h4>Link to Case Studies</h4>
+                        <div className="admin__checkbox-group">
+                          {CASE_STUDY_OPTIONS.map(option => (
+                            <label key={option.slug} className="admin__checkbox-label">
+                              <input
+                                type="checkbox"
+                                checked={editData.caseStudySlugs.includes(option.slug)}
+                                onChange={() => handleCaseStudyToggle(option.slug)}
+                              />
+                              {option.title}
+                            </label>
+                          ))}
+                        </div>
+                        <div className="admin__edit-actions">
+                          <Button variant="primary" size="sm" onClick={() => handleSaveEdit(testimonial.id)}>
+                            Save
+                          </Button>
+                          <Button variant="secondary" size="sm" onClick={() => setEditingId(null)}>
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <div className="admin__actions">
+                  {editingId !== testimonial.id && (
+                    <Button variant="secondary" size="sm" onClick={() => handleEdit(testimonial)}>
+                      Edit
+                    </Button>
+                  )}
                   {!testimonial.approved ? (
                     <>
                       <Button variant="success" size="sm" onClick={() => handleApprove(testimonial.id)}>

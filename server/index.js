@@ -32,6 +32,18 @@ if (!existsSync(projectsFile)) {
   writeFileSync(projectsFile, '[]');
 }
 
+// Admin secret for protected routes
+const ADMIN_SECRET = process.env.ADMIN_SECRET || 'dev-admin-secret';
+
+// Admin authentication middleware
+function requireAdmin(req, res, next) {
+  const secret = req.headers['x-admin-secret'];
+  if (secret !== ADMIN_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -72,6 +84,11 @@ function writeTestimonials(data) {
   writeFileSync(testimonialsFile, JSON.stringify(data, null, 2));
 }
 
+function readProjects() {
+  const data = readFileSync(projectsFile, 'utf-8');
+  return JSON.parse(data);
+}
+
 // Routes
 
 // GET /api/testimonials - Fetch testimonials with optional approved filter
@@ -96,13 +113,14 @@ app.get('/api/testimonials', (req, res) => {
 // POST /api/testimonials - Create new testimonial with video upload
 app.post('/api/testimonials', upload.single('video'), (req, res) => {
   try {
-    const { name, title, company, quote } = req.body;
+    const { name, title, company, quote, caseStudySlugs } = req.body;
 
     if (!name || !quote) {
       return res.status(400).json({ error: 'Name and quote are required' });
     }
 
     const testimonials = readTestimonials();
+    const hasVideo = req.file || req.body.videoUrl;
 
     const newTestimonial = {
       id: randomUUID(),
@@ -110,7 +128,9 @@ app.post('/api/testimonials', upload.single('video'), (req, res) => {
       title: title || '',
       company: company || '',
       quote,
-      videoUrl: req.file ? `/uploads/${req.file.filename}` : null,
+      type: hasVideo ? 'video' : 'written',
+      videoUrl: req.file ? `/uploads/${req.file.filename}` : (req.body.videoUrl || null),
+      caseStudySlugs: caseStudySlugs ? JSON.parse(caseStudySlugs) : [],
       approved: false,
       createdAt: new Date().toISOString(),
     };
@@ -125,11 +145,11 @@ app.post('/api/testimonials', upload.single('video'), (req, res) => {
   }
 });
 
-// PATCH /api/testimonials/:id - Update testimonial (for approval)
-app.patch('/api/testimonials/:id', (req, res) => {
+// PATCH /api/testimonials/:id - Update testimonial (for approval and editing)
+app.patch('/api/testimonials/:id', requireAdmin, (req, res) => {
   try {
     const { id } = req.params;
-    const { approved } = req.body;
+    const { approved, type, caseStudySlugs, videoUrl } = req.body;
 
     const testimonials = readTestimonials();
     const index = testimonials.findIndex((t) => t.id === id);
@@ -142,6 +162,19 @@ app.patch('/api/testimonials/:id', (req, res) => {
       testimonials[index].approved = approved;
     }
 
+    if (type && (type === 'written' || type === 'video')) {
+      testimonials[index].type = type;
+    }
+
+    if (Array.isArray(caseStudySlugs)) {
+      testimonials[index].caseStudySlugs = caseStudySlugs;
+    }
+
+    if (videoUrl !== undefined) {
+      testimonials[index].videoUrl = videoUrl;
+      testimonials[index].type = videoUrl ? 'video' : 'written';
+    }
+
     writeTestimonials(testimonials);
     res.json(testimonials[index]);
   } catch (error) {
@@ -151,7 +184,7 @@ app.patch('/api/testimonials/:id', (req, res) => {
 });
 
 // DELETE /api/testimonials/:id - Delete testimonial
-app.delete('/api/testimonials/:id', (req, res) => {
+app.delete('/api/testimonials/:id', requireAdmin, (req, res) => {
   try {
     const { id } = req.params;
     const testimonials = readTestimonials();
@@ -171,8 +204,19 @@ app.delete('/api/testimonials/:id', (req, res) => {
   }
 });
 
+// GET /api/projects - Fetch all projects/case studies
+app.get('/api/projects', (_req, res) => {
+  try {
+    const projects = readProjects();
+    res.json(projects);
+  } catch (error) {
+    console.error('Error reading projects:', error);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
+
 // Error handling for multer
-app.use((error, req, res, next) => {
+app.use((error, _req, res, next) => {
   if (error instanceof multer.MulterError) {
     if (error.code === 'LIMIT_FILE_SIZE') {
       return res.status(400).json({ error: 'File is too large. Maximum size is 100MB.' });
