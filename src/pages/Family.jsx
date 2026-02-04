@@ -115,7 +115,7 @@ export default function Family() {
         {/* What I Care About Section */}
         <section className="family-section">
           <Container size="narrow">
-            <h2>What I Care About</h2>
+            <h2>Values & Perspective</h2>
 
             <div className="family-story">
               <div className="family-story__content">
