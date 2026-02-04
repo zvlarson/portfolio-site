@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PageNav from '../components/PageNav';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import Seo from '../components/Seo';
@@ -72,6 +73,7 @@ export default function RequestVideo() {
     return (
       <div className="request-video">
         <Seo title="Thank You" path="/request-video" noindex />
+        <PageNav />
         <Container size="narrow">
           <div className="request-video__success">
             <div className="request-video__success-icon">&#10003;</div>
@@ -89,9 +91,9 @@ export default function RequestVideo() {
   return (
     <div className="request-video">
       <Seo title="Share Your Experience" path="/request-video" noindex />
+      <PageNav />
       <Container size="narrow">
         <div className="request-video__header">
-          <Link to="/" className="request-video__back">&larr; Back</Link>
           <h1>{title}</h1>
           <p>{subtitle}</p>
         </div>

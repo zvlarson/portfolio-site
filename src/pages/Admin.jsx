@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import PageNav from '../components/PageNav';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import Seo from '../components/Seo';
@@ -177,6 +178,7 @@ export default function Admin() {
     return (
       <div className="admin">
         <Seo title="Admin" path="/admin" noindex />
+        <PageNav />
         <Container>
           <div className="admin__login">
             <h1>Admin Login</h1>
@@ -202,6 +204,7 @@ export default function Admin() {
   return (
     <div className="admin">
       <Seo title="Admin" path="/admin" noindex />
+      <PageNav />
       <Container>
         <div className="admin__header">
           <div className="admin__title-row">

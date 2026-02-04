@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About"
+        title="Professional"
         path="/about"
         description="Learn more about Zach Larson - enterprise transformation leader specializing in people, strategy, and operations."
         type="profile"
@@ -22,20 +22,24 @@ export default function AboutPage() {
       <main className="about-page">
         <Container size="narrow">
           <header className="about-page__header">
-            <div className="about-page__photo-container">
+            <div className="about-page__photos">
               <img
-                src="/images/professional/headshot.jpg"
+                src="/images/professional/about-main.webp"
                 alt="Zach Larson"
-                className="about-page__photo"
-                width="200"
-                height="200"
+                className="about-page__photo--main"
+                width="350"
+                height="350"
+                loading="eager"
+                decoding="async"
               />
             </div>
-            <h1>Zachary Larson</h1>
-            <p className="about-page__tagline">MBA, SHRM-SCP</p>
-            <p className="about-page__subtitle">
-              Enterprise Transformation Leader | People, Strategy, & Operations
-            </p>
+            <div className="about-page__intro">
+              <h1>Zachary Larson</h1>
+              <p className="about-page__tagline">MBA, SHRM-SCP</p>
+              <p className="about-page__subtitle">
+                Enterprise Transformation Leader | People, Strategy, & Operations
+              </p>
+            </div>
           </header>
 
           <section className="about-page__bio">
@@ -87,7 +91,7 @@ export default function AboutPage() {
           </section>
 
           <div className="about-page__family-link">
-            <Link to="/family">Meet my family &rarr;</Link>
+            <Link to="/family">Personal &rarr;</Link>
           </div>
         </Container>
       </main>

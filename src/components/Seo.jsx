@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 
 const SITE_URL = 'https://zvlarson.com';
-const DEFAULT_TITLE = 'Zach Larson | Software Engineer';
-const DEFAULT_DESCRIPTION = 'Full-stack software engineer specializing in building exceptional digital experiences. View my portfolio, case studies, and testimonials.';
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`;
+const DEFAULT_TITLE = 'Zach Larson | Enterprise Transformation Leader';
+const DEFAULT_DESCRIPTION = 'Enterprise transformation leader specializing in people, strategy, and operations. View case studies, testimonials, and learn about my approach.';
+const DEFAULT_IMAGE = `${SITE_URL}/og.png`;
 
 export default function Seo({
   title,

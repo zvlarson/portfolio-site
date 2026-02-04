@@ -5,11 +5,20 @@ const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'Testimonials', href: '/testimonials' },
-  { label: 'About', href: '/about' },
+  { label: 'Professional', href: '/about' },
+  { label: 'Personal', href: '/family' },
+  { label: 'Leave a Testimonial', href: '/request-video' },
 ];
 
 export default function PageNav() {
   const location = useLocation();
+
+  const isActive = (href) => {
+    if (href === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname === href || location.pathname.startsWith(href + '/');
+  };
 
   return (
     <nav className="page-nav" aria-label="Main navigation">
@@ -22,7 +31,7 @@ export default function PageNav() {
             <Link
               key={item.label}
               to={item.href}
-              className={`page-nav__link ${location.pathname === item.href ? 'page-nav__link--active' : ''}`}
+              className={`page-nav__link ${isActive(item.href) ? 'page-nav__link--active' : ''}`}
             >
               {item.label}
             </Link>

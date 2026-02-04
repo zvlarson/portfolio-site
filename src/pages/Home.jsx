@@ -1,4 +1,4 @@
-import Nav from '../components/Nav';
+import PageNav from '../components/PageNav';
 import Hero from '../components/Hero';
 import Proof from '../components/Proof';
 import Testimonials from '../components/Testimonials';
@@ -12,9 +12,9 @@ export default function Home() {
     <>
       <Seo
         path="/"
-        description="Full-stack software engineer specializing in building exceptional digital experiences. View my portfolio, case studies, and testimonials."
+        description="Enterprise transformation leader specializing in people, strategy, and operations. View case studies, testimonials, and learn about my approach."
       />
-      <Nav />
+      <PageNav />
       <Hero />
       <Proof />
       <Testimonials />
