@@ -201,3 +201,10 @@
   color: var(--color-text-secondary);
   margin-bottom: var(--space-8);
 }
+
+/* Video preview */
+.request-video__preview {
+  margin-top: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}

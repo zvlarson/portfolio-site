@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { upload } from '@vercel/blob/client';
 import PageNav from '../components/PageNav';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import VideoPlayer from '../components/VideoPlayer';
 import Seo from '../components/Seo';
 import { siteContent } from '../data/content';
 import './RequestVideo.css';
@@ -20,6 +21,20 @@ export default function RequestVideo() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { title, subtitle, prompts } = siteContent.requestVideo;
+
+  // Create object URL for video preview
+  const videoPreviewUrl = useMemo(() => {
+    return videoFile ? URL.createObjectURL(videoFile) : null;
+  }, [videoFile]);
+
+  // Clean up object URL on unmount or when file changes
+  useEffect(() => {
+    return () => {
+      if (videoPreviewUrl) {
+        URL.revokeObjectURL(videoPreviewUrl);
+      }
+    };
+  }, [videoPreviewUrl]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -221,6 +236,11 @@ export default function RequestVideo() {
                 )}
               </div>
             </div>
+            {videoPreviewUrl && (
+              <div className="request-video__preview">
+                <VideoPlayer src={videoPreviewUrl} alt="Video preview" />
+              </div>
+            )}
           </div>
 
           {errorMessage && (

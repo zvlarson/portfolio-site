@@ -1,3 +1,4 @@
+import VideoPlayer from './VideoPlayer';
 import './Testimonials.css';
 
 export default function TestimonialCard({ testimonial }) {
@@ -7,10 +8,7 @@ export default function TestimonialCard({ testimonial }) {
     <div className="testimonial-card">
       {videoUrl && (
         <div className="testimonial-card__video">
-          <video controls preload="metadata">
-            <source src={videoUrl} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <VideoPlayer src={videoUrl} alt={`Video testimonial from ${name}`} />
         </div>
       )}
       <blockquote className="testimonial-card__quote">"{quote}"</blockquote>

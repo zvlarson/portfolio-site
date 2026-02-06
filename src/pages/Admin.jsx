@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageNav from '../components/PageNav';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import VideoPlayer from '../components/VideoPlayer';
 import Seo from '../components/Seo';
 import './Admin.css';
 
@@ -253,9 +254,10 @@ export default function Admin() {
                 <div className="admin__card-content">
                   {testimonial.videoUrl && (
                     <div className="admin__video">
-                      <video controls preload="metadata">
-                        <source src={testimonial.videoUrl} type="video/mp4" />
-                      </video>
+                      <VideoPlayer
+                        src={testimonial.videoUrl}
+                        alt={`Video testimonial from ${testimonial.name}`}
+                      />
                     </div>
                   )}
 

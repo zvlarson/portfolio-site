@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageNav from '../components/PageNav';
 import Footer from '../components/Footer';
 import Container from '../components/ui/Container';
+import VideoPlayer from '../components/VideoPlayer';
 import Seo from '../components/Seo';
 import './TestimonialsPage.css';
 
@@ -93,9 +94,10 @@ export default function TestimonialsPage() {
                             allowFullScreen
                           />
                         ) : (
-                          <video controls preload="metadata">
-                            <source src={testimonial.videoUrl} type="video/mp4" />
-                          </video>
+                          <VideoPlayer
+                            src={testimonial.videoUrl}
+                            alt={`Video testimonial from ${testimonial.name}`}
+                          />
                         )}
                       </div>
                     )}
