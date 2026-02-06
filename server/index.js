@@ -99,7 +99,15 @@ app.get('/api/testimonials', (req, res) => {
 
     if (approved === 'true') {
       return res.json(testimonials.filter((t) => t.approved === true));
-    } else if (approved === 'false') {
+    }
+
+    // Anything other than approved=true is admin-only.
+    const secret = req.headers['x-admin-secret'];
+    if (secret !== ADMIN_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    if (approved === 'false') {
       return res.json(testimonials.filter((t) => t.approved === false));
     }
 

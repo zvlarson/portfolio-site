@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { upload } from '@vercel/blob/client';
 import PageNav from '../components/PageNav';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
@@ -42,24 +43,64 @@ export default function RequestVideo() {
     setStatus('loading');
     setErrorMessage('');
 
-    const data = new FormData();
-    data.append('name', formData.name);
-    data.append('title', formData.title);
-    data.append('company', formData.company);
-    data.append('quote', formData.quote);
-    if (videoFile) {
-      data.append('video', videoFile);
-    }
-
     try {
-      const response = await fetch('/api/testimonials', {
-        method: 'POST',
-        body: data,
-      });
+      const isProd = import.meta.env.PROD;
+
+      // In production (Vercel), upload videos directly to Blob (serverless body limit is ~4.5MB).
+      // In development, keep the existing Express+multer flow.
+      let videoUrl = null;
+      if (videoFile && isProd) {
+        const ext = (videoFile.name.split('.').pop() || 'mp4').toLowerCase();
+        const id = globalThis.crypto?.randomUUID
+          ? globalThis.crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        const pathname = `testimonials/videos/${id}.${ext}`;
+
+        const blob = await upload(pathname, videoFile, {
+          access: 'public',
+          handleUploadUrl: '/api/blob/video',
+        });
+        videoUrl = blob.url;
+      }
+
+      let response;
+      if (isProd) {
+        response = await fetch('/api/testimonials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            title: formData.title,
+            company: formData.company,
+            quote: formData.quote,
+            videoUrl,
+          }),
+        });
+      } else {
+        const data = new FormData();
+        data.append('name', formData.name);
+        data.append('title', formData.title);
+        data.append('company', formData.company);
+        data.append('quote', formData.quote);
+        if (videoFile) {
+          data.append('video', videoFile);
+        }
+
+        response = await fetch('/api/testimonials', {
+          method: 'POST',
+          body: data,
+        });
+      }
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to submit testimonial');
+        let message = 'Failed to submit testimonial';
+        try {
+          const error = await response.json();
+          message = error.error || message;
+        } catch {
+          // ignore
+        }
+        throw new Error(message);
       }
 
       setStatus('success');

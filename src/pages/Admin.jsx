@@ -38,7 +38,9 @@ export default function Admin() {
         url += '?approved=true';
       }
 
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: filter === 'approved' ? undefined : { 'x-admin-secret': adminSecret },
+      });
       if (!response.ok) throw new Error('Failed to fetch testimonials');
       const data = await response.json();
       setTestimonials(data);
@@ -47,7 +49,7 @@ export default function Admin() {
     } finally {
       setLoading(false);
     }
-  }, [filter]);
+  }, [adminSecret, filter]);
 
   useEffect(() => {
     if (isAuthenticated) {
