@@ -71,29 +71,32 @@ export default function RequestVideo() {
 
   if (status === 'success') {
     return (
-      <div className="request-video">
+      <>
         <Seo title="Thank You" path="/request-video" noindex />
         <PageNav />
-        <Container size="narrow">
-          <div className="request-video__success">
-            <div className="request-video__success-icon">&#10003;</div>
-            <h1>Thank You!</h1>
-            <p>Your testimonial has been submitted for review.</p>
-            <Button as={Link} to="/">
-              Back to Home
-            </Button>
-          </div>
-        </Container>
-      </div>
+        <div className="request-video">
+          <Container size="narrow">
+            <div className="request-video__success">
+              <div className="request-video__success-icon">&#10003;</div>
+              <h1>Thank You!</h1>
+              <p>Your testimonial has been submitted for review.</p>
+              <Button as={Link} to="/">
+                Back to Home
+              </Button>
+            </div>
+          </Container>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="request-video">
+    <>
       <Seo title="Share Your Experience" path="/request-video" noindex />
       <PageNav />
-      <Container size="narrow">
-        <div className="request-video__header">
+      <div className="request-video">
+        <Container size="narrow">
+          <div className="request-video__header">
           <h1>{title}</h1>
           <p>{subtitle}</p>
         </div>
@@ -192,7 +195,8 @@ export default function RequestVideo() {
             {status === 'loading' ? 'Submitting...' : 'Submit Testimonial'}
           </Button>
         </form>
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </>
   );
 }

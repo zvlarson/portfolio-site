@@ -12,6 +12,7 @@ const navItems = [
 
 export default function PageNav() {
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   const isActive = (href) => {
     if (href === '/') {
@@ -23,7 +24,7 @@ export default function PageNav() {
   return (
     <nav className="page-nav" aria-label="Main navigation">
       <div className="page-nav__container">
-        <Link to="/" className="page-nav__logo">
+        <Link to="/" className={`page-nav__logo ${isHome ? 'page-nav__logo--hidden-desktop' : ''}`}>
           Zach Larson
         </Link>
         <div className="page-nav__links">

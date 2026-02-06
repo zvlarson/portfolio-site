@@ -32,7 +32,7 @@ export default function Hero() {
           </div>
           <div className="hero__photo">
             <img
-              src="/images/professional/hero-headshot-circle.png"
+              src="/images/professional/hero-headshot.webp"
               alt="Zachary Larson"
               loading="eager"
               decoding="async"

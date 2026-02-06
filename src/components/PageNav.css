@@ -27,6 +27,11 @@
   color: var(--color-accent);
 }
 
+.page-nav__logo--hidden-desktop {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .page-nav__links {
   display: flex;
   gap: var(--space-2);
@@ -55,6 +60,10 @@
   .page-nav__container {
     flex-direction: column;
     gap: var(--space-4);
+  }
+
+  .page-nav__logo {
+    display: none;
   }
 
   .page-nav__links {
